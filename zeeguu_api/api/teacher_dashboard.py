@@ -298,9 +298,9 @@ def create_own_cohort():
     if not _is_teacher(flask.g.user.id):
         flask.abort(401)
 
-    inv_code = request.get_json()["inv_code"]
-    name = request.get_json()["name"]
-    language_id = request.get_json()["language_id"]
+    inv_code = request.get_json()["form"]["inv_code"]
+    name = request.get_json()["form"]["name"]
+    language_id = request.get_json()["form"]["language_id"]
 
     if name is None or inv_code is None or language_id is None:
         flask.abort(400)
@@ -314,7 +314,7 @@ def create_own_cohort():
         flask.abort(400)
     language = Language.find_or_create(language_id)
     teacher_id = flask.g.user.id
-    max_students = request.get_json()["max_students"]
+    max_students = request.get_json()["form"]["max_students"]
 
     if int(max_students) < 1:
         flask.abort(400)
